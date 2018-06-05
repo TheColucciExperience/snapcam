@@ -1,0 +1,27 @@
+
+/*	Main styles file for Snapcam app. We'll use BEM methodology for
+ *	modular css. We'll use the 'b' namespace for BEM block elements.
+ */
+
+// Importings assets
+
+@import 'fonts',
+				'colors',
+				'animations';
+
+// General reset
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+// Initial styles for body
+
+.b-body {
+	width: 100vw;
+	min-height: 100vh;
+	overflow-x: hidden;	
+  background-color: $white;  // Fallback color
+}

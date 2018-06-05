@@ -1,0 +1,39 @@
+{
+  "name": "snapcam",
+  "version": "1.0.0",
+  "description": "An experimental webcam photo taker webapp",
+  "private": true,
+  "scripts": {
+    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheColucciExperience/snapcam.git"
+  },
+  "keywords": [
+    "snapcam",
+    "phototaker"
+  ],
+  "author": "TheColucciExperience",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TheColucciExperience/snapcam/issues"
+  },
+  "homepage": "https://github.com/TheColucciExperience/snapcam#readme",
+  "devDependencies": {
+    "clean-webpack-plugin": "^0.1.19",
+    "css-loader": "^0.28.11",
+    "file-loader": "^1.1.11",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.0.1",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.3",
+    "webpack-dev-server": "^3.1.4",
+    "webpack-merge": "^4.1.2"
+  },
+  "dependencies": {}
+}
