@@ -7,7 +7,8 @@
 
 @import 'fonts',
 				'colors',
-				'animations';
+				'animations',
+				'utilities';
 
 // General reset
 
@@ -24,4 +25,21 @@
 	min-height: 100vh;
 	overflow-x: hidden;	
   background-color: $white;  // Fallback color
+}
+
+// Styles for main page header
+
+.b-header {
+	padding: 2rem 1rem;
+	box-shadow: 0 1px 3px transparentize($black, .8);
+	@media (min-width: 768px) { padding-left: 4rem; }
+	&__title {
+		font: {
+			family: $titleFont;
+			size: 3rem;
+		}		
+		text-align: center;
+		color: darken($blue, 30%);
+		@media (min-width: 768px) { text-align: left; }
+	}
 }
