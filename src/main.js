@@ -3,6 +3,7 @@
 
 import './index.html'
 import './scss/styles.scss';
+import filterExample from './images/filter-example.jpg';
 
 // IIFE to keep global namespace clean
 
@@ -11,6 +12,58 @@ import './scss/styles.scss';
 	// Actions for when script loads
 
 	$(function main() {
+
+		/* Filters list to create filter examples and apply classes and
+		 * necessary DOM references to elements which we need to interact with
+		 */
+
+		const filtersList = [
+			'blur',
+			'brightness',
+			'contrast',
+			'grayscale',
+			'invert',
+			'opacity',
+			'saturate',
+			'sepia'
+		],
+			$video = $( '.js-main-video' ),
+			$effectsContainer = $( '.js-effects-container' );
+
+		// Creating video effects examples for each filter
+
+		filtersList.forEach( function createExampleFilter(filterName) {
+
+			console.log(filterName);
+
+			/* Creating elements to append. Here we just mimic the original DOM
+			 * structure on the fly
+			 */
+
+			const $buttonContainer = $( '<button>' ),
+				$buttonImg = $( '<img/>' ),
+				$buttonLabel = $( '<span>' );
+
+			// Adding attributes and classes to created elements
+
+			$buttonContainer.addClass( 'b-effects-example-button' );
+
+			$buttonImg.addClass( `b-effects-example-button__img f-${ filterName }` );
+			$buttonImg.attr( {
+				'src': filterExample,
+				'alt': `Example image for filter ${ filterName }`
+			} );
+
+			$buttonLabel.addClass( `b-effects-example-button__label
+															b-effects-example-button__label--inactive` );
+			$buttonLabel.text( filterName );
+
+			// Appending elements
+
+			$buttonContainer.append( $buttonImg, $buttonLabel );
+			$effectsContainer.append( $buttonContainer );
+
+		} );
 
 		// Getting user media
 
@@ -32,13 +85,8 @@ import './scss/styles.scss';
 
 			// Success callback
 
-			function loadVideoStream(localMediaStream) {
-
-				// Getting video DOM reference to attach a source to it
-
-				const $video = $( '.js-main-video' );
+			function loadVideoStream(localMediaStream) {							
 				$video.attr( 'src', window.URL.createObjectURL( localMediaStream ) );
-
 			},
 
 			// Error callback

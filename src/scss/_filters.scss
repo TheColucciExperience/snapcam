@@ -1,0 +1,11 @@
+
+// File to hold filters. These will be prefixed with 'f'.
+
+.f-blur { filter: blur(8px); }
+.f-brightness { filter: brightness(.5); }
+.f-contrast { filter: contrast(200%); }
+.f-grayscale { filter: grayscale(100%); }
+.f-invert { filter: invert(100%); }
+.f-opacity { filter: opacity(50%); }
+.f-saturate { filter: saturate(200%); }
+.f-sepia { filter: sepia(100%); }

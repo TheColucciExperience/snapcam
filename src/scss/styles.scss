@@ -8,15 +8,8 @@
 @import 'fonts',
 				'colors',
 				'animations',
+				'filters',
 				'utilities';
-
-// General reset
-
-* {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-}
 
 // Initial styles for body
 
@@ -50,14 +43,93 @@
 
 // Video box styles
 
-.video-box {
+.b-video-box {
 	display: flex;
 	flex-flow: column nowrap;
-	align-items: center;
+	align-items: center;	
 	// Setting video width and max-width
 	&__video {		
 		display: block;
 		width: 100%;
-		max-width: 75rem;
+		max-width: 25rem;
+		margin-bottom: 1rem;
+		box-shadow: 1px 2px 2px transparentize($black, .8),
+						 	 -1px -2px 2px transparentize($black, .8);		
+		@media (min-width: 768px) {
+			max-width: 35rem;
+			margin-bottom: 1.5rem;
+			@media (min-width: 1300px) {
+				max-width: 45rem;
+				margin-bottom: 2rem;
+			}
+		}
+	}
+}
+
+// Styles for effects examples container
+
+.b-effects-container {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	max-width: 90vw;
+	overflow-x: auto;
+	padding: .5rem;
+	background-color: darken($white, 2%);
+	box-shadow:  1px 2px 2px transparentize($black, .8),
+						 	 -1px -2px 2px transparentize($black, .8);
+  @media (min-width: 768px) {
+  	max-width: 70vw;
+  	padding: 1rem;
+  	@media (min-width: 992px) {
+  		max-width: 90vw;
+  		padding: 1.2rem;
+  	}
+  }
+}
+
+// Styles for effects example boxes
+
+.b-effects-example-button {
+	position: relative;  // Creating a positioning context
+	&:not(:last-child) { margin-right: 1.5rem; }
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+	&__img {
+		position: relative;
+		z-index: 10;
+		display: block;
+		width: 5rem;
+		@media (min-width: 768px) {
+			width: 6rem;
+			@media (min-width: 992px) { width: 7.5rem; }
+		}
+	}
+	&__label {
+		position: absolute;
+		z-index: 20;
+		left: 0;
+		bottom: 0;
+		display: block;
+		width: 100%;
+		border: none;
+		padding: .4rem;
+		font: {
+			family: $titleFont;
+			size: .9rem;
+		}
+		text: {
+			align: center;
+			transform: uppercase;
+		}
+		color: $white;
+		transition-duration: .4s;
+		&--inactive { background-color: darken($red, 10%); }
+		&--active { background-color: darken($blue, 10%); }
+		@media (min-width: 768px) {
+			font-size: 1.1rem;
+			@media (min-width: 992px) { font-size: 1.2rem; }
+		}
 	}
 }
