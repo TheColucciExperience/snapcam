@@ -8,12 +8,14 @@
 @import 'fonts',
 				'colors',
 				'animations',
+				'mixins',
 				'filters',
 				'utilities';
 
 // Initial styles for body
 
 .b-body {
+	position: relative;
 	width: 100vw;
 	min-height: 100vh;
 	overflow-x: hidden;
@@ -39,22 +41,28 @@
 
 // Adjusting main content padding
 
-.b-main { padding-top: 10vh; }
+.b-main {
+	padding: {
+		top: 10vh;
+		bottom: 10vh;
+	}
+}
 
 // Video box styles
 
 .b-video-box {
+	position: relative;  // Reference positioning context
 	display: flex;
 	flex-flow: column nowrap;
-	align-items: center;	
+	align-items: center;
 	// Setting video width and max-width
-	&__video {		
+	&__video {
 		display: block;
 		width: 100%;
 		max-width: 25rem;
 		margin-bottom: 1rem;
 		box-shadow: 1px 2px 2px transparentize($black, .8),
-						 	 -1px -2px 2px transparentize($black, .8);		
+						 	 -1px -2px 2px transparentize($black, .8);
 		@media (min-width: 768px) {
 			max-width: 35rem;
 			margin-bottom: 1.5rem;
@@ -74,15 +82,18 @@
 	justify-content: space-between;
 	max-width: 90vw;
 	overflow-x: auto;
+	margin-bottom: 1rem;
 	padding: .5rem;
 	background-color: darken($white, 2%);
 	box-shadow:  1px 2px 2px transparentize($black, .8),
 						 	 -1px -2px 2px transparentize($black, .8);
   @media (min-width: 768px) {
   	max-width: 70vw;
+		margin-bottom: 1.5rem;
   	padding: 1rem;
   	@media (min-width: 992px) {
   		max-width: 90vw;
+			margin-bottom: 2rem;
   		padding: 1.2rem;
   	}
   }
@@ -115,6 +126,7 @@
 		width: 100%;
 		border: none;
 		padding: .4rem;
+		line-height: 1rem;
 		font: {
 			family: $titleFont;
 			size: .9rem;
@@ -128,8 +140,93 @@
 		&--inactive { background-color: darken($red, 10%); }
 		&--active { background-color: darken($blue, 10%); }
 		@media (min-width: 768px) {
+			line-height: 1.3rem;
 			font-size: 1.1rem;
 			@media (min-width: 992px) { font-size: 1.2rem; }
 		}
+	}
+}
+
+// Styles for snapshot button
+
+.b-snapshot-button {
+	@include clickButton(0, .8rem 1rem, $white, $blue, $red);
+	font: {
+		family: $titleFont;
+		size: 1.2rem;
+	}
+	@media (min-width: 768px) {
+		padding: .9rem 1.1rem;
+		font-size: 1.3rem;
+		@media (min-width: 992px) {
+			padding: 1rem 1.2rem;
+			font-size: 1.4rem;
+		}
+	}
+}
+
+// Styles for pictures menu button
+
+.b-pictures-menu-button {
+	@include clickButton(50%, 1rem, $white, $blue, $red);
+	position: absolute;
+	z-index: 50;
+	right: 5vw;
+	bottom: 5vh;
+	font-size: 1.5rem;
+}
+
+// Styles for pictures navigation block
+
+.b-pictures-nav {
+	position: fixed;
+	z-index: 200;
+	top: 0;
+	left: 0;
+	display: none;
+	width: 100vw;
+	height: 100vh;
+	transform: translate(100vw, 0);
+	// Overlay for pictures nav
+	&__overlay {
+		position: absolute;
+		z-index: 100;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background: transparentize($black, .3);
+	}
+}
+
+// Setting styles for pictures block
+
+.b-pictures-block {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 200;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	width: 100%;
+	height: 100vh;
+	overflow-y: auto;
+	padding-top: 15vh;
+	background-color: $black;
+	// Adjusting widths based on viewports
+	@media (min-width: 576px) {
+		width: 60%;
+		@media (min-width: 768px) {
+			width: 45%;
+			@media (min-width: 992px) { width: 30%; }
+		}
+	}
+	&__button {
+		position: absolute;
+		top: 3rem;
+		left: 3rem;
+		font-size: 1.5rem;
+		@include clickButton(50%, .3rem .7rem, $white, $blue, $red);
 	}
 }

@@ -10,3 +10,13 @@
 	from { opacity: 1; }
 	to { opacity: 0; }
 }
+
+@keyframes slideMenuIn {
+	from { transform: translate(100vw, 0); }
+	to { transform: translate(0, 0); }
+}
+
+@keyframes slideMenuOut {
+	from { transform: translate(0, 0); }
+	to { transform: translate(100vw, 0); }	
+}
