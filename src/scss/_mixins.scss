@@ -17,11 +17,11 @@
   padding: $padding;
   color: $color;
   background-color: $background-color;  
-  transition-duration: .4s;
+  transition: background-color .4s;
   cursor: pointer;
   box-shadow: 1px 2px 1px transparentize($black, .8),
 							-1px -1px 1px transparentize($black, .7);
-  @media not all and (hover: none) {
+  @media (min-width: 992px) {
     &:hover {	background-color: $bg-hover-color;	}
   }
 }

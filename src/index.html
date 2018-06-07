@@ -34,7 +34,7 @@
 
       <div class="b-video-box">
 
-        <video class="b-video-box__video js-main-video f-grayscale"></video>
+        <video class="b-video-box__video js-main-video"></video>
         <div class="b-effects-container js-effects-container"></div>
         <button class="b-snapshot-button js-snapshot-button">
           take snapshot
@@ -43,33 +43,29 @@
 
       </div>
 
-    <main>
+    </main>
 
     <!-- Pictures menu button -->
 
-    <button class="b-pictures-menu-button js-pictures-menu-open-btn">
-      <span class="sr-only">pictures menu button</span>
-      <span class="fas fa-images"></span>
+    <button class="b-pictures-menu-button js-pictures-menu-btn">
+      <span class="sr-only">Toggle Menu Button</span>
+      <span class="fas fa-images js-pictures-menu-btn-icon"></span>
     </button>
 
     <!-- Mini nav for user taken pictures -->
 
-    <nav class="b-pictures-nav js-pictures-nav">
+    <nav class="b-pictures-nav b-pictures-nav--hidden js-pictures-nav">
 
       <h2 class="sr-only">Pictures list navigation</h2>
 
-      <div class="b-pictures-block">
-
-        <button class="b-pictures-block__button js-pictures-menu-close-btn">
-          <span class="sr-only">Close menu</span>
-          <span class="fas fa-times"></span>
-        </button>
+      <div class="b-pictures-block">        
 
         <canvas width="150" height="150" style="background: red;"></canvas>
 
       </div>
 
-      <div class="b-pictures-nav__overlay js-pictures-overlay"></div>
+      <div class="b-pictures-nav__overlay b-pictures-nav__overlay--hidden
+      js-pictures-overlay"></div>
 
     </nav>
 

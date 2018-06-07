@@ -107,6 +107,12 @@
 	border: none;
 	background-color: transparent;
 	cursor: pointer;
+	transition-duration: .4s;
+	@media (min-width: 992px) {
+		&:hover {
+			box-shadow: 1px 2px 2px transparentize($black, .5);
+		}
+	}
 	&__img {
 		position: relative;
 		z-index: 10;
@@ -169,11 +175,12 @@
 
 .b-pictures-menu-button {
 	@include clickButton(50%, 1rem, $white, $blue, $red);
-	position: absolute;
-	z-index: 50;
+	position: fixed;
+	z-index: 300;
 	right: 5vw;
 	bottom: 5vh;
 	font-size: 1.5rem;
+	&--close-padded {	padding: .6rem .9rem; }
 }
 
 // Styles for pictures navigation block
@@ -182,11 +189,11 @@
 	position: fixed;
 	z-index: 200;
 	top: 0;
-	left: 0;
-	display: none;
+	left: 0;	
 	width: 100vw;
 	height: 100vh;
 	transform: translate(100vw, 0);
+	&--hidden { display: none; }
 	// Overlay for pictures nav
 	&__overlay {
 		position: absolute;
@@ -196,6 +203,7 @@
 		width: 100vw;
 		height: 100vh;
 		background: transparentize($black, .3);
+		&--hidden { display: none; }
 	}
 }
 
@@ -221,12 +229,5 @@
 			width: 45%;
 			@media (min-width: 992px) { width: 30%; }
 		}
-	}
-	&__button {
-		position: absolute;
-		top: 3rem;
-		left: 3rem;
-		font-size: 1.5rem;
-		@include clickButton(50%, .3rem .7rem, $white, $blue, $red);
-	}
+	}	
 }

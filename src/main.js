@@ -30,13 +30,19 @@ import filterExample from './images/filter-example.jpg';
 			'sepia'
 		],
 			$video = $( '.js-main-video' ),
-			$effectsContainer = $( '.js-effects-container' )
-			// Buttons to open and close pictures menu
-			$menuOpenBtn = $( '.js-pictures-menu-open-btn' ),
-			$menuCloseBtn = $( '.js-pictures-menu-close-btn' ),
+			$effectsContainer = $( '.js-effects-container' ),
+			// Button to open and close pictures menu
+			$menuToggleBtn = $( '.js-pictures-menu-btn' ),
 			// Pictures nav menu and pictures overlay DOM elements
 			$picturesNav = $( '.js-pictures-nav' ),
 			$picturesOverlay = $( '.js-pictures-overlay' );
+
+		// Object to control user interactions with menu
+
+		const UIControl = {
+			menuOpen: false,
+			userCanToggle: true
+		}
 
 		/* Adding click listeners to button effect examples with jQuery
 		 * event delegation
@@ -47,6 +53,11 @@ import filterExample from './images/filter-example.jpg';
 			'.b-effects-example-button',
 			applyFilterEffect
 		);
+
+		// Adding click listeners to menu buttons and overlay
+
+		$menuToggleBtn.on( 'click', toggleMenu );		
+		$picturesOverlay.on( 'click', toggleMenu );
 
 		// Creating video effects examples for each filter
 
@@ -154,12 +165,76 @@ import filterExample from './images/filter-example.jpg';
 
 				// Resetting video effects and adding current one
 
-				const currentFilterClass =
-					$video
-						.attr( 'class' )
-						.replace( /f-.*/gi, `f-${ $( this ).data( 'filter' ) }` );
+				if ( $video.attr( 'class' ).match( /f-.*/ ) ) {
 
-				$video.attr( 'class', currentFilterClass );
+					const currentFilterClass =
+						$video
+							.attr( 'class' )
+							.replace( /f-.*/gi, `f-${ $( this ).data( 'filter' ) }` );
+
+					$video.attr( 'class', currentFilterClass );
+					
+				}
+				else {
+					$video.addClass( `f-${ $( this ).data( 'filter' ) }` );
+				}											
+
+			}
+
+		}
+
+		// Function that will handle toggling the pictures menu
+
+		function toggleMenu() {
+
+			/* Only act if user can toggle, and if so disable control until end
+			 * of transition
+			 */
+
+			if ( UIControl.userCanToggle ) {				
+
+				if ( !UIControl.menuOpen ) {
+
+					$picturesNav.removeClass( 'b-pictures-nav--hidden' );
+					$picturesNav.css( 'animation', 'slideMenuIn .4s ease forwards' );
+					$picturesOverlay.removeClass( 'b-pictures-nav__overlay--hidden' );
+					$picturesOverlay.css( 'animation', 'fadeIn .4s ease forwards' );
+					$menuToggleBtn.addClass( 'b-pictures-menu-button--close-padded' );
+					/* We need to reference the element directly or else
+					 * Font Awesome won't update on the fly.
+					 */
+					$( '.js-pictures-menu-btn-icon' ).addClass( 'fa-times' );
+					$( '.js-pictures-menu-btn-icon' ).removeClass( 'fa-images' );
+
+				}
+				else {
+
+					$picturesNav.css( 'animation', 'slideMenuOut .4s ease forwards' );
+					$picturesOverlay.css( 'animation', 'fadeOut .4s ease forwards' );
+					$menuToggleBtn
+						.removeClass( 'b-pictures-menu-button--close-padded' );
+					$( '.js-pictures-menu-btn-icon' ).addClass( 'fa-images' );
+					$( '.js-pictures-menu-btn-icon' ).removeClass( 'fa-times' );
+
+					// Timeout to hide elements
+
+					window.setTimeout( function hideMenuElements() {
+						$picturesNav.addClass( 'b-pictures-nav--hidden' );
+						$picturesOverlay.addClass( 'b-pictures-nav__overlay--hidden' );
+					}, 410 );
+
+				}
+
+				// Updating UI control object
+
+				UIControl.userCanToggle = false;
+				UIControl.menuOpen = !UIControl.menuOpen;
+
+				// Timeout to allow user to toggle menu again
+
+				window.setTimeout( function returnUserControl() {
+					UIControl.userCanToggle = true;					
+				}, 420 );
 
 			}
 
