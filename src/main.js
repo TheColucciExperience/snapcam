@@ -35,7 +35,9 @@ import filterExample from './images/filter-example.jpg';
 			$menuToggleBtn = $( '.js-pictures-menu-btn' ),
 			// Pictures nav menu and pictures overlay DOM elements
 			$picturesNav = $( '.js-pictures-nav' ),
-			$picturesOverlay = $( '.js-pictures-overlay' );
+			$picturesOverlay = $( '.js-pictures-overlay' ),
+			// Getting message container
+			$messageContainer = $( '.js-message-container' );
 
 		// Object to control user interactions with menu
 
@@ -56,12 +58,41 @@ import filterExample from './images/filter-example.jpg';
 
 		// Adding click listeners to menu buttons and overlay
 
-		$menuToggleBtn.on( 'click', toggleMenu );		
+		$menuToggleBtn.on( 'click', toggleMenu );
 		$picturesOverlay.on( 'click', toggleMenu );
 
 		// Creating video effects examples for each filter
 
 		filtersList.forEach( createExampleFilter );
+
+		// Adding slicker carousel to effects container
+
+		$effectsContainer.slick( {
+			dots: false,
+			arrows: false,
+			slidesToShow: 3,
+			slidesToScroll: 3,
+			infinite: true,
+			mobileFirst: true,
+			responsive: [
+				{
+					breakpoint: 576,
+					settings: {
+						slidesToShow: 4,
+						slidesToScroll: 4
+					}
+				}, {
+					breakpoint: 992,
+					settings: {
+						slidesToShow: 6,
+						slidesToScroll: 6
+					}
+				}, {
+					breakpoint: 1200,
+					settings: 'unslick'
+				}
+			]
+		} );
 
 		// Getting user media
 
@@ -100,8 +131,12 @@ import filterExample from './images/filter-example.jpg';
 		}
 
 		function videoStreamFailed(error) {
-			// Will be updated later
-			console.log( `An error occurred: ${error}` );
+			createMessage(
+				'An error occurred',
+				`You need to have a camera in your machine and give access
+				permissions for Snapcam to work. Reload the page and try again.`,
+				10000
+			);
 		}
 
 		// Function to create example filters
@@ -173,11 +208,11 @@ import filterExample from './images/filter-example.jpg';
 							.replace( /f-.*/gi, `f-${ $( this ).data( 'filter' ) }` );
 
 					$video.attr( 'class', currentFilterClass );
-					
+
 				}
 				else {
 					$video.addClass( `f-${ $( this ).data( 'filter' ) }` );
-				}											
+				}
 
 			}
 
@@ -191,7 +226,7 @@ import filterExample from './images/filter-example.jpg';
 			 * of transition
 			 */
 
-			if ( UIControl.userCanToggle ) {				
+			if ( UIControl.userCanToggle ) {
 
 				if ( !UIControl.menuOpen ) {
 
@@ -233,10 +268,69 @@ import filterExample from './images/filter-example.jpg';
 				// Timeout to allow user to toggle menu again
 
 				window.setTimeout( function returnUserControl() {
-					UIControl.userCanToggle = true;					
+					UIControl.userCanToggle = true;
 				}, 420 );
 
 			}
+
+		}
+
+		// Function to create message box
+
+		function createMessage(title = 'Message Box', text = '', timeout = 0) {
+
+			// Creating box and title
+
+			const $messageBox = $( '<section>' ),
+				$title = $( '<h2>' );
+
+			// Adding classes to elements
+
+			$messageBox.addClass( 'b-message-box' );
+			$title.addClass( 'b-message-box__title' );
+
+			// Adding text to title
+
+			$title.text( title.trim() );
+
+			// Appending items
+
+			$messageBox.append( $title );
+			$messageContainer.append( $messageBox );
+
+			// If text string is not empty, create paragraph
+
+			if ( text.trim() ) {
+
+				const $paragraph = $( '<p>' );
+				$paragraph.addClass( 'b-message-box__text' );
+				$paragraph.text( text.trim() );
+
+				// Appending paragraph
+
+				$messageBox.append( $paragraph );
+
+			}
+
+			// Animating message box
+
+			$messageBox.css( 'animation', 'slideMessageIn .5s ease forwards' );
+
+			const boxTimeout = timeout >= 600 ? timeout : 600;
+
+			console.log()
+
+			window.setTimeout( function hideMessageBox() {
+
+				// Starting hiding animation
+
+				$messageBox.css( 'animation', 'slideMessageOut .5s ease forwards' );
+
+				window.setTimeout( function removeMessageBox() {
+					$messageBox.remove();
+				}, 500 );
+
+			}, boxTimeout );
 
 		}
 

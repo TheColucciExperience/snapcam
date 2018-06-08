@@ -80,7 +80,7 @@
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: space-between;
-	max-width: 90vw;
+	width: 90vw;
 	overflow-x: auto;
 	margin-bottom: 1rem;
 	padding: .5rem;
@@ -88,11 +88,12 @@
 	box-shadow:  1px 2px 2px transparentize($black, .8),
 						 	 -1px -2px 2px transparentize($black, .8);
   @media (min-width: 768px) {
-  	max-width: 70vw;
+  	width: 70vw;
 		margin-bottom: 1.5rem;
   	padding: 1rem;
   	@media (min-width: 992px) {
-  		max-width: 90vw;
+  		width: 90vw;
+			max-width: 80rem;
 			margin-bottom: 2rem;
   		padding: 1.2rem;
   	}
@@ -103,7 +104,10 @@
 
 .b-effects-example-button {
 	position: relative;  // Creating a positioning context
-	&:not(:last-child) { margin-right: 1.5rem; }
+	margin: {
+		right: .75rem;
+		left: .75rem;
+	}
 	border: none;
 	background-color: transparent;
 	cursor: pointer;
@@ -117,11 +121,7 @@
 		position: relative;
 		z-index: 10;
 		display: block;
-		width: 5rem;
-		@media (min-width: 768px) {
-			width: 6rem;
-			@media (min-width: 992px) { width: 7.5rem; }
-		}
+		width: 100%;
 	}
 	&__label {
 		position: absolute;
@@ -189,7 +189,7 @@
 	position: fixed;
 	z-index: 200;
 	top: 0;
-	left: 0;	
+	left: 0;
 	width: 100vw;
 	height: 100vh;
 	transform: translate(100vw, 0);
@@ -229,5 +229,45 @@
 			width: 45%;
 			@media (min-width: 992px) { width: 30%; }
 		}
-	}	
+	}
+}
+
+// Styles for message container block
+
+.b-message-container {
+	position: fixed;
+	z-index: 300;
+	top: 5vh;
+	right: 7.5vw;
+	width: 85vw;
+	max-width: 30rem;
+	@media (min-width: 992px) {
+		top: auto;
+		right: auto;
+		left: 7.5vw;
+		bottom: 5vh;
+	}
+}
+
+// Styles for message box
+
+.b-message-box {
+	padding: 2rem 1.5rem;
+	color: $white;
+	background-color: $black;
+	box-shadow:  1px 2px 1px transparentize($black, .2),
+						 	 -1px -2px 1px transparentize($black, .2);
+	transition-duration: .35s;
+	&:not(:last-child) { margin-bottom: 1.5rem; }
+	&__title {
+		font: {
+			family: $titleFont;
+			size: 2rem;
+		}
+		text-transform: capitalize;
+	}
+	&__text {
+		margin-top: 2rem;
+		font-family: $textFont;
+	}
 }
