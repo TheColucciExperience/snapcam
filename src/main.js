@@ -105,40 +105,33 @@ import filterExample from './images/filter-example.jpg';
 			]
 		} );
 
-		// Getting user media
+		// Getting user media and initiating video stream request
 
-		navigator.getMedia = ( navigator.getUserMedia ||
-		 											 navigator.webkitGetUserMedia ||
-												   navigator.mozGetUserMedia ||
-												   navigator.msGetUserMedia );
-
-		// Initiating video stream request
-
-		navigator.getMedia(
+		navigator.mediaDevices.getUserMedia(
 
 			// Media permissons
 
 			{
 				video: true,
 				audio: false
-			},
+			}
 
+		)
+		.then(
 			// Success callback
-
-			videoStreamSuccess,
-
+			videoStreamSuccess
+		)
+		.catch(
 			// Error callback
-
 			videoStreamFailed
-
-		);
+		);		
 
 		// *** Functions
 
 		// Video stream callback functions
 
-		function videoStreamSuccess(localMediaStream) {
-			$video.attr( 'src', window.URL.createObjectURL( localMediaStream ) );
+		function videoStreamSuccess(localMediaStream) {			
+			$video.get( 0 ).srcObject = localMediaStream;
 		}
 
 		function videoStreamFailed(error) {
