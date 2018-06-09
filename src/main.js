@@ -32,16 +32,22 @@ import filterExample from './images/filter-example.jpg';
 			$video = $( '.js-main-video' ),
 			$effectsContainer = $( '.js-effects-container' ),
 			// Button to open and close pictures menu
-			$menuToggleBtn = $( '.js-pictures-menu-btn' ),
-			// Pictures nav menu and pictures overlay DOM elements
+			$menuToggleBtn = $( '.js-pictures-menu-button' ),
+			// Snapshot button
+			$snapshotBtn = $( '.js-snapshot-button' ),
+			// Pictures nav menu, block and overlay DOM elements
 			$picturesNav = $( '.js-pictures-nav' ),
-			$picturesOverlay = $( '.js-pictures-overlay' );
+			$picturesBlock = $( '.js-pictures-block' ),
+			$picturesOverlay = $( '.js-pictures-overlay' ),
+			// Pictures message element for users who don't have any snapshots
+			$picturesMessage = $( '.js-pictures-message' );
 
 		// Object to control user interactions with menu
 
 		const UIControl = {
 			menuOpen: false,
-			userCanToggle: true
+			userCanToggle: true,
+			picturesCounter: 1
 		}
 
 		/* Adding click listeners to button effect examples with jQuery
@@ -53,6 +59,10 @@ import filterExample from './images/filter-example.jpg';
 			'.b-effects-example-button',
 			applyFilterEffect
 		);
+
+		// Click listener for snapshot button
+
+		$snapshotBtn.on( 'click', takeSnapshot );
 
 		// Adding click listeners to menu buttons and overlay
 
@@ -237,6 +247,74 @@ import filterExample from './images/filter-example.jpg';
 				}, 420 );
 
 			}
+
+		}
+
+		// Function to take user snapshot and show it in pictures menu
+
+		function takeSnapshot() {
+
+			// Hiding 'no snapshots' message, if not already
+
+			if ( !$picturesMessage.hasClass( 'b-pictures-block__message--hidden' ) ) {
+				$picturesMessage.addClass( 'b-pictures-block__message--hidden' );
+			}
+
+			// Creating elements to form link block
+
+			const $link = $( '<a>' ),
+				$canvas = $( '<canvas>' ),
+				$label = $( '<span>' ),
+				// Getting canvas context
+				ctx = $canvas.get( 0 ).getContext( '2d' );
+
+			// Creating canvas 
+
+			// Setting canvas width and height
+
+			$canvas.attr( {
+				'width': '200px',
+				'height': '200px'
+			} );
+
+			// If the video has any effect, add it to canvas
+
+			if ( $video.attr( 'class' ).match( /f-.+/ ) ) {
+
+				// Getting filter class and adding it to canvas				
+
+				$canvas.addClass(
+					$video.attr( 'class' ).match( /f-.+/ )[0]
+				);
+
+			}
+
+			// Drawing snapshot on canvas
+
+			ctx.drawImage(
+				$video.get( 0 ), // Video element to draw as an image
+				0, 0, 200, 200
+			);
+
+			// Attributes and classes for link to download canvas
+
+			$link
+				.addClass( 'b-pictures-link-block' )
+				.attr( {
+					'href': $canvas.get( 0 ).toDataURL(),
+					'download': `snapshot${ UIControl.picturesCounter++ }.png`
+				} );
+
+			// Adding classes and text to link block label
+
+			$label
+				.addClass( 'b-pictures-link-block__label' )
+				.text( 'download' );
+
+			// Appending items
+
+			$link.append( $canvas, $label );
+			$picturesBlock.prepend( $link );
 
 		}
 
