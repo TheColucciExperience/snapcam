@@ -124,17 +124,19 @@ import filterExample from './images/filter-example.jpg';
 		.catch(
 			// Error callback
 			videoStreamFailed
-		);		
+		);
 
 		// *** Functions
 
 		// Video stream callback functions
 
-		function videoStreamSuccess(localMediaStream) {			
+		function videoStreamSuccess(localMediaStream) {
 			$video.get( 0 ).srcObject = localMediaStream;
+			$video.get( 0 ).play();
 		}
 
 		function videoStreamFailed(error) {
+			window.console.log( error );
 			createMessage(
 				'An error occurred',
 				`You need to have a camera in your machine and give access
@@ -302,7 +304,7 @@ import filterExample from './images/filter-example.jpg';
 					// Getting canvas context
 					ctx = $canvas.get( 0 ).getContext( '2d' );
 
-				// Creating canvas 
+				// Creating canvas
 
 				// Setting canvas width and height
 
@@ -315,7 +317,7 @@ import filterExample from './images/filter-example.jpg';
 
 				if ( $video.attr( 'class' ).match( /f-.+/ ) ) {
 
-					// Getting filter class and adding it to canvas				
+					// Getting filter class and adding it to canvas
 
 					$canvas.addClass(
 						$video.attr( 'class' ).match( /f-.+/ )[0]
@@ -358,7 +360,7 @@ import filterExample from './images/filter-example.jpg';
 					UIControl.userCanSnapshot = true;
 				}, 400 );
 
-			}			
+			}
 
 		}
 
@@ -403,7 +405,7 @@ import filterExample from './images/filter-example.jpg';
 
 			$messageBox.css( 'animation', 'slideMessageIn .5s ease forwards' );
 
-			const boxTimeout = timeout >= 600 ? timeout : 600;			
+			const boxTimeout = timeout >= 600 ? timeout : 600;
 
 			window.setTimeout( function hideMessageBox() {
 
